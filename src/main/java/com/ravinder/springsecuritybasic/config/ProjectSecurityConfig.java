@@ -7,10 +7,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import sun.security.util.Password;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -51,7 +55,7 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }*/
 
-    @Override
+ /*   @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
         UserDetails user = User.withUsername("admin").password("12345").authorities("admin").build();
@@ -59,7 +63,13 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
         inMemoryUserDetailsManager.createUser(user);
         inMemoryUserDetailsManager.createUser(user1);
         auth.userDetailsService(inMemoryUserDetailsManager);
+    }*/
+
+    @Bean
+    public UserDetailsService userDetailsService(DataSource dataSource){
+        return new JdbcUserDetailsManager(dataSource);
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
