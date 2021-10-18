@@ -65,10 +65,10 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(inMemoryUserDetailsManager);
     }*/
 
-    @Bean
+/*    @Bean
     public UserDetailsService userDetailsService(DataSource dataSource){
         return new JdbcUserDetailsManager(dataSource);
-    }
+    }*/
 
 
     @Bean
